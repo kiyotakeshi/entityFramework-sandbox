@@ -30,7 +30,8 @@ namespace sandbox
             services.AddControllers();
             services.AddDbContext<DataContext>(options =>
             {
-              options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+              // options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+              options.UseSqlServer(Configuration.GetConnectionString("MSSQLConnection"));
             });
         }
 

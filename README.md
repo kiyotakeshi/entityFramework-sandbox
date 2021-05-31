@@ -17,6 +17,9 @@ dotnet add package Microsoft.EntityFrameworkCore --version 3.1.4
 
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 3.1.4
 
+# mssql を使用する場合
+# dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 3.1.4
+
 dotnet new gitignore
 
 dotnet run
@@ -43,7 +46,7 @@ $ file sandbox.db
 sandbox.db: SQLite 3.x database, last written using SQLite version 3028
 ```
 
-※DDL を生成した場合  
+※DDL を生成した場合(for SQLite)
 
 ```sql
 -- dotnet ef migrations script
@@ -111,4 +114,59 @@ main: /Users/kiyotakeshi/gitdir/c-charp/c-charp-sandbox/sandbox/sandbox.db
 sqlite> .table
 Authors                Books                  Reviwers             
 BookAuthors            Reviews                __EFMigrationsHistory
+```
+
+※DDL を生成した場合(for MSSQL)
+
+```sql
+-- CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+--     "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+--     "ProductVersion" TEXT NOT NULL
+-- );
+
+CREATE TABLE "Authors" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Authors" PRIMARY KEY AUTOINCREMENT,
+    "FirstName" TEXT NULL,
+    "LastName" TEXT NULL
+);
+
+CREATE TABLE "Books" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Books" PRIMARY KEY AUTOINCREMENT,
+    "Title" TEXT NULL,
+    "Published" TEXT NULL
+);
+
+CREATE TABLE "Reviwers" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Reviwers" PRIMARY KEY AUTOINCREMENT,
+    "FirstName" TEXT NULL,
+    "LastName" TEXT NULL
+);
+
+CREATE TABLE "BookAuthors" (
+    "BookId" INTEGER NOT NULL,
+    "AuthorId" INTEGER NOT NULL,
+    CONSTRAINT "PK_BookAuthors" PRIMARY KEY ("BookId", "AuthorId"),
+    CONSTRAINT "FK_BookAuthors_Authors_AuthorId" FOREIGN KEY ("AuthorId") REFERENCES "Authors" ("Id") ON DELETE CASCADE,
+    CONSTRAINT "FK_BookAuthors_Books_BookId" FOREIGN KEY ("BookId") REFERENCES "Books" ("Id") ON DELETE CASCADE
+);
+
+CREATE TABLE "Reviews" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Reviews" PRIMARY KEY AUTOINCREMENT,
+    "Headline" TEXT NULL,
+    "ReviewText" TEXT NULL,
+    "Rating" INTEGER NOT NULL,
+    "ReviewerId" INTEGER NULL,
+    "BookId" INTEGER NULL,
+    CONSTRAINT "FK_Reviews_Books_BookId" FOREIGN KEY ("BookId") REFERENCES "Books" ("Id") ON DELETE RESTRICT,
+    CONSTRAINT "FK_Reviews_Reviwers_ReviewerId" FOREIGN KEY ("ReviewerId") REFERENCES "Reviwers" ("Id") ON DELETE RESTRICT
+);
+
+CREATE INDEX "IX_BookAuthors_AuthorId" ON "BookAuthors" ("AuthorId");
+
+CREATE INDEX "IX_Reviews_BookId" ON "Reviews" ("BookId");
+
+CREATE INDEX "IX_Reviews_ReviewerId" ON "Reviews" ("ReviewerId");
+
+-- INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+-- VALUES ('20210531232148_InitialCreate', '3.1.4');
 ```
