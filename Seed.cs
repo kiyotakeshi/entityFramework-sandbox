@@ -6,16 +6,16 @@ using sandbox.models;
 
 namespace entityFramework_sandbox
 {
-    public class Seed
+  public class Seed
+  {
+    public static async Task SeedData(DataContext context)
     {
-        public static async Task SeedData(DataContext context)
-        {
-          if(context.Books.Any()) return;
-          var book = new Book()
-                    {
-                        Title = "Big Romantic Book",
-                        Published = new DateTime(1879,3,2),
-                        Reviews = new List<Review>()
+      if (context.Books.Any()) return;
+      var book = new Book()
+      {
+        Title = "Big Romantic Book",
+        Published = new DateTime(1879, 3, 2),
+        Reviews = new List<Review>()
                         {
                             new Review
                             {
@@ -40,10 +40,10 @@ namespace entityFramework_sandbox
                                 }
                             },
                         }
-                      };
-          await context.Books.AddAsync(book);
-          // await context.Books.AddRangeAsync(book);
-          await context.SaveChangesAsync();
-        }
+      };
+      await context.Books.AddAsync(book);
+      // await context.Books.AddRangeAsync(book);
+      await context.SaveChangesAsync();
     }
+  }
 }

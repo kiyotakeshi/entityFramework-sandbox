@@ -24,7 +24,7 @@ namespace entityFramework_sandbox.Controllers
     [HttpGet("{bookId}")]
     public async Task<ActionResult<Book>> GetBook(int bookId)
     {
-      if(!await _bookRepository.BookExists(bookId))
+      if (!await _bookRepository.BookExists(bookId))
         return NotFound();
 
       var book = await _bookRepository.GetBook(bookId);
