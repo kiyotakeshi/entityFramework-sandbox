@@ -1,4 +1,4 @@
-# sandbox
+# entityFramework-sandbox
 
 entityFramework を使用し、 DB に migration できることを確認する。
 
