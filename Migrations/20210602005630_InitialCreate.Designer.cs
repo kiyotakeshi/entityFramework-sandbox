@@ -9,7 +9,7 @@ using sandbox.models;
 namespace sandbox.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210601135215_InitialCreate")]
+    [Migration("20210602005630_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
