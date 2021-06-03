@@ -10,29 +10,31 @@ namespace entityFramework_sandbox
   {
     public static async Task SeedData(DataContext context)
     {
-      var author1 = new Author()
+      if (!context.BookAuthors.Any())
       {
-        FirstName = "Jack",
-        LastName = "London",
-      };
-      var author2 = new Author()
-      {
-        FirstName = "Pavol",
-        LastName = "Almasi",
-      };
-      var book1 = new Book()
-      {
-        Title = "Big Romantic Book",
-        Published = new DateTime(1879, 3, 2),
-        Reviews = new List<Review>()
+        var author1 = new Author()
+        {
+          FirstName = "Jack",
+          LastName = "London",
+        };
+        var author2 = new Author()
+        {
+          FirstName = "Pavol",
+          LastName = "Almasi",
+        };
+        var book1 = new Book()
+        {
+          Title = "Big Romantic Book",
+          Published = new DateTime(1879, 3, 2),
+          Reviews = new List<Review>()
                         {
                             new Review { Headline = "Good Romantic Book", ReviewText = "This book made me cry a few times", Rating = 5,
                                 Reviewer = new Reviewer(){ FirstName = "Allison", LastName = "Kutz" } },
                             new Review { Headline = "Horrible Romantic Book", ReviewText = "My wife made me read it and I hated it", Rating = 1,
                                 Reviewer = new Reviewer(){ FirstName = "Kyle", LastName = "Kutz" } }
                         }
-      };
-      var booksAuthors = new List<BookAuthor>()
+        };
+        var booksAuthors = new List<BookAuthor>()
       {
         new BookAuthor()
         {
@@ -108,8 +110,9 @@ namespace entityFramework_sandbox
             }
         }
       };
-      await context.BookAuthors.AddRangeAsync(booksAuthors);
-      await context.SaveChangesAsync();
+        await context.BookAuthors.AddRangeAsync(booksAuthors);
+        await context.SaveChangesAsync();
+      }
     }
   }
 }
