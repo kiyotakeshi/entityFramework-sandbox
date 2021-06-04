@@ -17,6 +17,11 @@ namespace entityFramework_sandbox
           FirstName = "Jack",
           LastName = "London",
         };
+        var reviewer1 = new Reviewer()
+        {
+          FirstName = "Tom",
+          LastName = "Jerry"
+        };
         var author2 = new Author()
         {
           FirstName = "Pavol",
@@ -31,7 +36,7 @@ namespace entityFramework_sandbox
                             new Review { Headline = "Good Romantic Book", ReviewText = "This book made me cry a few times", Rating = 5,
                                 Reviewer = new Reviewer(){ FirstName = "Allison", LastName = "Kutz" } },
                             new Review { Headline = "Horrible Romantic Book", ReviewText = "My wife made me read it and I hated it", Rating = 1,
-                                Reviewer = new Reviewer(){ FirstName = "Kyle", LastName = "Kutz" } }
+                                Reviewer = reviewer1 }
                         }
         };
         var booksAuthors = new List<BookAuthor>()
@@ -49,7 +54,7 @@ namespace entityFramework_sandbox
                     new Review { Headline = "Terrible Book", ReviewText = "Reviewing Call of the Wild and it is terrrible book", Rating = 1,
                         Reviewer = new Reviewer(){ FirstName = "Peter", LastName = "Griffin" } },
                     new Review { Headline = "Decent Book", ReviewText = "Not a bad read, I kind of liked it", Rating = 3,
-                        Reviewer = new Reviewer(){ FirstName = "Paul", LastName = "Griffin" } }
+                        Reviewer = reviewer1 }
                 }
             },
             Author = author1

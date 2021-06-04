@@ -13,7 +13,7 @@ namespace sandbox.models
     public DbSet<Book> Books { get; private set; }
     public DbSet<Author> Authors { get; private set; }
     public DbSet<Review> Reviews { get; private set; }
-    public DbSet<Reviewer> Reviwers { get; private set; }
+    public DbSet<Reviewer> Reviewers { get; private set; }
     public DbSet<BookAuthor> BookAuthors { get; private set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
